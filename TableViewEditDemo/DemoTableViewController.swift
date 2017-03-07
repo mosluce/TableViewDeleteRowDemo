@@ -37,12 +37,13 @@ class DemoTableViewController: UIViewController {
         
         self.items.remove(at: index)
         
-        if indexPath.section == 0 {
-            if self.tableView(tableView, numberOfRowsInSection: 1) > 0 {
-                self.tableView.deleteRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
-            }
+        if indexPath.section == 0 { // 移除對象在 section 0
+            let s0rows = self.tableView(tableView, numberOfRowsInSection: 0)
+            //let s1rows = self.tableView(tableView, numberOfRowsInSection: 1)
             
-            if self.tableView(tableView, numberOfRowsInSection: 0) == 4 {
+            if s0rows == 4 { // section 1 還沒被吃完
+                self.tableView.deleteRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+                
                 var indexPaths: [IndexPath] = []
                 
                 for i in indexPath.row...3 {
@@ -50,10 +51,10 @@ class DemoTableViewController: UIViewController {
                 }
                 
                 self.tableView.reloadRows(at: indexPaths, with: .automatic)
-            } else {
+            } else { // section 1 被吃完， section 0 開始吃自己
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
             }
-        } else {
+        } else { // 移除對象在 section 1
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
