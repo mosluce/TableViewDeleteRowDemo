@@ -13,6 +13,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let vc = DemoTableViewController()
+        self.addChildViewController(vc)
+        self.view.addSubview(vc.view)
+        
+        vc.view.frame = UIScreen.main.bounds.divided(atDistance: 20, from: .minYEdge).remainder
+        
+        vc.didMove(toParentViewController: self)
     }
 
     override func didReceiveMemoryWarning() {
